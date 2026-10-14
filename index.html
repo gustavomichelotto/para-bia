@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Bia 🤎 | Nosso Cantinho Marrom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --marrom-900:#2B1B12;
+  --marrom-800:#3E2723;
+  --marrom-700:#4E342E;
+  --marrom-600:#5D4037;
+  --marrom-500:#795548;
+  --marrom-400:#8D6E63;
+  --caramelo-500:#A67C52;
+  --caramelo-400:#C8A97E;
+  --caramelo-300:#D9B99B;
+  --caramelo-200:#E8D5B7;
+  --creme-300:#EFEBE9;
+  --creme-200:#F5EFE6;
+  --creme-100:#FBF7F0;
+  --creme:#FFFDF8;
+  --ouro:#D4A373;
+  --verde-musgo:#7A8B6F;
+  --rosa-queimado:#C9A88A;
+  --sombra:0 20px 60px rgba(62,39,35,.18);
+  --sombra-leve:0 8px 30px rgba(62,39,35,.12);
+  --radius:28px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Quicksand',sans-serif;
+  background:var(--creme-100);
+  color:var(--marrom-800);
+  overflow-x:hidden;
+  cursor:default;
+}
+::selection{background:var(--caramelo-400);color:var(--marrom-900)}
+h1,h2{font-family:'Playfair Display',serif}
+.script{font-family:'Dancing Script',cursive}
+
+/* LOADER */
+#loader{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,var(--marrom-900),var(--marrom-700),var(--caramelo-500));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;color:var(--creme-200);transition:opacity .7s,visibility .7s;
+}
+#loader.hide{opacity:0;visibility:hidden}
+.loader-capi{font-size:84px;animation:walk 1.2s ease-in-out infinite}
+@keyframes walk{0%,100%{transform:translateX(-14px) rotate(-6deg)}50%{transform:translateX(14px) rotate(6deg)}}
+.loader-bar{width:220px;height:8px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden}
+.loader-bar span{display:block;height:100%;width:40%;background:var(--caramelo-200);border-radius:99px;animation:load 1.1s infinite}
+@keyframes load{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+
+/* CURSOR HEARTS + FLOATING */
+#hearts-canvas{position:fixed;inset:0;pointer-events:none;z-index:9998}
+.trail-heart{position:fixed;pointer-events:none;z-index:9998;font-size:18px;animation:trailUp 1s ease-out forwards}
+@keyframes trailUp{to{transform:translateY(-60px) scale(.3) rotate(20deg);opacity:0}}
+
+/* NAV */
+nav{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);
+  z-index:100;width:min(96%,1080px);
+  background:rgba(43,27,18,.82);backdrop-filter:blur(14px);
+  border:1px solid rgba(200,169,126,.35);
+  border-radius:99px;padding:10px 10px 10px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:var(--sombra);color:var(--creme-200);
+}
+.nav-logo{font-family:'Dancing Script',cursive;font-size:26px;font-weight:700}
+.nav-logo span{color:var(--caramelo-300)}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a{
+  color:var(--creme-200);text-decoration:none;font-size:13.5px;font-weight:600;
+  padding:9px 14px;border-radius:99px;transition:.25s;white-space:nowrap;
+}
+.nav-links a:hover{background:var(--caramelo-500);color:#fff}
+.nav-cta{background:var(--caramelo-400)!important;color:var(--marrom-900)!important}
+.mobile-btn{display:none;background:var(--caramelo-400);border:0;border-radius:99px;padding:8px 14px;font-weight:700;cursor:pointer}
+@media(max-width:860px){.nav-links{display:none}.nav-links.open{display:flex;position:absolute;top:60px;right:10px;flex-direction:column;background:var(--marrom-900);padding:12px;border-radius:20px}.mobile-btn{display:block}}
+
+/* HERO */
+.hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 500px at 15% 20%, #D9B99B 0%, transparent 60%),
+    radial-gradient(800px 600px at 85% 15%, #E8D5B7 0%, transparent 60%),
+    radial-gradient(700px 500px at 50% 95%, #C8A97E 0%, transparent 60%),
+    linear-gradient(180deg,#FBF7F0 0%, #F5EFE6 45%, #E8D5B7 100%);
+  display:flex;align-items:center;justify-content:center;
+  padding:130px 20px 60px;
+}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.9;pointer-events:none}
+.blob1{width:420px;height:420px;background:radial-gradient(circle,#8D6E63,#5D4037);top:-120px;left:-120px;opacity:.18;animation:float1 9s ease-in-out infinite}
+.blob2{width:360px;height:360px;background:radial-gradient(circle,#D4A373,#A67C52);bottom:-80px;right:-80px;opacity:.28;animation:float1 11s ease-in-out infinite reverse}
+.blob3{width:180px;height:180px;background:radial-gradient(circle,#EFEBE9,#D7CCC8);top:20%;right:12%;opacity:.9;animation:float1 7s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.05)}}
+.hero-inner{position:relative;z-index:2;max-width:1080px;width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center}}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;border:1px solid var(--caramelo-200);color:var(--marrom-600);
+  padding:8px 16px;border-radius:99px;font-size:13px;font-weight:700;letter-spacing:.3px;
+  box-shadow:var(--sombra-leve);animation:popIn .8s ease both;
+}
+.hero h1{font-size:clamp(42px,6vw,78px);line-height:.95;margin:18px 0 10px;color:var(--marrom-900)}
+.hero h1 .script{font-size:clamp(54px,7.5vw,96px);color:var(--marrom-600);display:block;line-height:1}
+.hero h1 em{font-style:italic;background:linear-gradient(90deg,var(--marrom-700),var(--caramelo-500),var(--ouro));-webkit-background-clip:text;background-clip:text;color:transparent}
+.typing{font-size:18px;min-height:56px;color:var(--marrom-600);font-weight:600;margin:10px 0 22px}
+.typing::after{content:'▍';animation:blink 1s infinite;color:var(--caramelo-500)}
+@keyframes blink{50%{opacity:0}}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.hero-btns{justify-content:center}}
+.btn{
+  border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+  padding:15px 26px;border-radius:99px;font-weight:800;font-size:15px;font-family:inherit;transition:.25s;
+}
+.btn-primary{background:linear-gradient(135deg,var(--marrom-800),var(--marrom-500));color:#fff;box-shadow:0 12px 30px rgba(62,39,35,.35)}
+.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 40px rgba(62,39,35,.4)}
+.btn-secondary{background:#fff;color:var(--marrom-800);border:2px solid var(--caramelo-200)}
+.btn-secondary:hover{background:var(--creme-200);transform:translateY(-3px)}
+.hero-stats{display:flex;gap:14px;margin-top:26px;flex-wrap:wrap}
+@media(max-width:900px){.hero-stats{justify-content:center}}
+.stat{background:rgba(255,255,255,.75);backdrop-filter:blur(10px);border:1px solid #fff;padding:12px 18px;border-radius:18px;min-width:132px;box-shadow:var(--sombra-leve)}
+.stat strong{font-size:22px;display:block;color:var(--marrom-900)}
+.stat span{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--marrom-400)}
+
+/* CARD FLUTUANTE BICHINHOS */
+.animals-stage{position:relative;height:520px;display:flex;align-items:center;justify-content:center}
+@media(max-width:900px){.animals-stage{height:440px}}
+.main-capivara{
+  width:300px;height:300px;background:linear-gradient(145deg,#fff,#F5EFE6);
+  border-radius:46% 54% 55% 45% / 48% 46% 54% 52%;
+  border:6px solid #fff;box-shadow:var(--sombra);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;z-index:3;animation:heroFloat 4.5s ease-in-out infinite;
+}
+@keyframes heroFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-18px) rotate(1deg)}}
+.main-capivara .big{font-size:130px;line-height:1;filter:drop-shadow(0 10px 20px rgba(0,0,0,.15))}
+.main-capivara b{font-size:22px;color:var(--marrom-800)}
+.main-capivara i{font-style:normal;font-size:13px;background:var(--marrom-800);color:var(--creme-200);padding:5px 14px;border-radius:99px;margin-top:6px;font-weight:700}
+.float-card{
+  position:absolute;background:#fff;border-radius:20px;padding:12px 14px;
+  box-shadow:var(--sombra);display:flex;align-items:center;gap:10px;
+  border:1px solid var(--caramelo-200);animation:heroFloat 5s ease-in-out infinite;z-index:4;
+}
+.float-card .e{font-size:38px}
+.float-card b{display:block;font-size:14px}
+.float-card small{color:var(--marrom-400);font-weight:600}
+.fc1{top:18px;left:0;animation-delay:.4s;transform:rotate(-6deg)}
+.fc2{top:90px;right:0;animation-delay:1.2s;transform:rotate(5deg)}
+.fc3{bottom:70px;left:10px;animation-delay:.8s;transform:rotate(4deg)}
+.fc4{bottom:18px;right:14px;animation-delay:1.6s;transform:rotate(-5deg)}
+.orbit-heart{position:absolute;font-size:26px;animation:orbit 7s linear infinite;z-index:2}
+@keyframes orbit{from{transform:rotate(0) translateX(210px) rotate(0)}to{transform:rotate(360deg) translateX(210px) rotate(-360deg)}}
+@keyframes popIn{from{opacity:0;transform:scale(.8) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* MARQUEE */
+.marquee{background:var(--marrom-900);color:var(--caramelo-200);overflow:hidden;white-space:nowrap;padding:14px 0;border-top:3px solid var(--caramelo-400);border-bottom:3px solid var(--caramelo-400);font-weight:700;letter-spacing:.5px}
+.marquee-track{display:inline-block;animation:scrollX 22s linear infinite}
+@keyframes scrollX{to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{padding:84px 20px}
+.wrap{max-width:1080px;margin:0 auto}
+.sec-tag{display:inline-block;background:var(--marrom-800);color:var(--caramelo-200);padding:7px 16px;border-radius:99px;font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.sec-title{font-size:clamp(30px,4vw,48px);color:var(--marrom-900);line-height:1.05;margin-bottom:10px}
+.sec-sub{color:var(--marrom-500);font-size:17px;max-width:640px;line-height:1.6}
+.reveal{opacity:0;transform:translateY(36px);transition:all .8s cubic-bezier(.2,.7,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+
+/* CONTADOR */
+#contador{background:linear-gradient(135deg,var(--marrom-900) 0%,var(--marrom-700) 55%,#6D4C41 100%);color:var(--creme-200);position:relative;overflow:hidden}
+#contador::before{content:'🤎 🤎 🤎 🤎 🤎';position:absolute;font-size:120px;opacity:.06;top:-20px;left:-10px;white-space:nowrap}
+.counter-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;margin-top:30px}
+@media(max-width:800px){.counter-grid{grid-template-columns:1fr}}
+.counter-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ccard{background:rgba(255,255,255,.1);border:1px solid rgba(200,169,126,.35);border-radius:22px;padding:22px;text-align:center;backdrop-filter:blur(8px)}
+.ccard strong{font-size:42px;display:block;font-family:'Playfair Display',serif}
+.ccard span{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;opacity:.8;font-weight:700}
+.date-box{background:var(--creme);color:var(--marrom-800);border-radius:var(--radius);padding:28px;box-shadow:var(--sombra)}
+.date-box label{font-weight:800;font-size:14px}
+.date-box input{width:100%;margin:10px 0 14px;padding:13px 15px;border-radius:14px;border:2px solid var(--caramelo-200);font-family:inherit;font-size:15px;font-weight:600}
+.date-box p{font-size:14px;line-height:1.6;color:var(--marrom-500)}
+
+/* TIME MARROM */
+#time{background:var(--creme)}
+.pets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+@media(max-width:900px){.pets-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.pets-grid{grid-template-columns:1fr}}
+.pet{
+  border-radius:26px;padding:26px 20px;text-align:center;color:#fff;position:relative;overflow:hidden;
+  cursor:pointer;transition:.3s;min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  box-shadow:var(--sombra-leve);
+}
+.pet:hover{transform:translateY(-8px) rotate(-1deg) scale(1.02)}
+.pet .emoji{font-size:76px;filter:drop-shadow(0 8px 16px rgba(0,0,0,.25));animation:heroFloat 4s ease-in-out infinite}
+.pet h3{font-size:22px}
+.pet p{font-size:14px;opacity:.92;line-height:1.5}
+.pet .tag{background:rgba(255,255,255,.22);padding:5px 12px;border-radius:99px;font-size:12px;font-weight:800}
+.pet1{background:linear-gradient(160deg,#5D4037,#3E2723)}
+.pet2{background:linear-gradient(160deg,#A67C52,#795548)}
+.pet3{background:linear-gradient(160deg,#8D6E63,#4E342E)}
+.pet4{background:linear-gradient(160deg,#D4A373,#5D4037)}
+.pet::after{content:'';position:absolute;width:180px;height:180px;background:rgba(255,255,255,.08);border-radius:50%;top:-60px;right:-60px}
+
+/* MOTIVOS */
+#motivos{background:linear-gradient(180deg,#F5EFE6,#E8D5B7);text-align:center}
+.motivo-card{
+  max-width:680px;margin:28px auto 0;background:#fff;border-radius:32px;padding:44px 32px;
+  box-shadow:var(--sombra);border:3px solid var(--caramelo-200);position:relative;
+}
+.motivo-card::before{content:'🤎';position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:44px;background:#fff;border-radius:50%;width:64px;height:64px;display:flex;align-items:center;justify-content:center;border:3px solid var(--caramelo-200)}
+#motivo-text{font-family:'Dancing Script',cursive;font-size:clamp(26px,3.5vw,38px);color:var(--marrom-800);min-height:110px;display:flex;align-items:center;justify-content:center;line-height:1.3}
+.motivo-count{margin-top:12px;font-size:13px;font-weight:800;letter-spacing:1px;color:var(--marrom-400);text-transform:uppercase}
+
+/* JOGOS */
+#jogos{background:var(--marrom-900);color:var(--creme-200)}
+#jogos .sec-title{color:var(--creme-100)}
+#jogos .sec-sub{color:var(--caramelo-300)}
+.tabs{display:flex;gap:10px;margin:26px 0;flex-wrap:wrap}
+.tab{border:1px solid var(--caramelo-400);background:transparent;color:var(--caramelo-200);padding:12px 20px;border-radius:99px;font-weight:800;cursor:pointer;font-family:inherit;transition:.25s;font-size:14px}
+.tab.active,.tab:hover{background:var(--caramelo-400);color:var(--marrom-900)}
+.game-panel{display:none;background:var(--creme);color:var(--marrom-800);border-radius:30px;padding:30px;box-shadow:var(--sombra)}
+.game-panel.active{display:block;animation:popIn .4s ease}
+.game-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+.score-pill{background:var(--marrom-800);color:#fff;padding:8px 18px;border-radius:99px;font-weight:800}
+#whack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:520px;margin:0 auto}
+.hole{background:#E8D5B7;border:3px solid var(--caramelo-200);border-radius:20px;height:118px;display:flex;align-items:center;justify-content:center;font-size:54px;cursor:pointer;transition:.15s;user-select:none;position:relative;overflow:hidden}
+.hole.active{background:#fff;border-color:var(--marrom-600);transform:scale(1.03)}
+.hole.bonus{border-color:#2E7D32;background:#E8F5E9}
+/* memoria */
+#memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:560px;margin:0 auto}
+@media(max-width:520px){#memory-grid{grid-template-columns:repeat(3,1fr)}}
+.mcard{background:linear-gradient(135deg,var(--marrom-600),var(--marrom-800));border-radius:16px;height:96px;display:flex;align-items:center;justify-content:center;font-size:40px;cursor:pointer;color:transparent;transition:.25s;border:2px solid var(--caramelo-200)}
+.mcard.open,.mcard.matched{background:#fff;color:initial;transform:scale(1.03)}
+.mcard.matched{border-color:#2E7D32;background:#E8F5E9}
+/* quiz */
+.quiz-q{font-size:20px;font-weight:800;margin-bottom:14px}
+.quiz-opts{display:grid;gap:10px}
+.quiz-opt{background:#fff;border:2px solid var(--caramelo-200);padding:14px 16px;border-radius:16px;cursor:pointer;font-weight:600;transition:.2s;text-align:left;font-family:inherit;font-size:15px}
+.quiz-opt:hover{border-color:var(--marrom-600);background:var(--creme-200)}
+.quiz-opt.correct{border-color:#2E7D32;background:#E8F5E9}
+.quiz-opt.wrong{border-color:#C62828;background:#FFEBEE}
+
+/* GALERIA */
+#galeria{background:var(--creme-100)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+@media(max-width:800px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.gallery-grid{grid-template-columns:1fr}}
+.gitem{
+  border-radius:22px;overflow:hidden;background:#fff;box-shadow:var(--sombra-leve);border:2px solid #fff;
+  min-height:260px;display:flex;flex-direction:column;position:relative;transition:.3s;
+}
+.gitem:hover{transform:translateY(-6px)}
+.gitem img{width:100%;height:230px;object-fit:cover;display:block}
+.gitem .cap{padding:14px 16px;font-weight:700;font-size:14px;color:var(--marrom-700)}
+.gitem .cap small{display:block;font-weight:600;color:var(--marrom-400);margin-top:4px}
+.g-empty{background:linear-gradient(160deg,#fff,#F5EFE6);border:2px dashed var(--caramelo-400);align-items:center;justify-content:center;text-align:center;padding:30px;gap:10px;cursor:pointer}
+.g-empty .big{font-size:56px}
+.upload-bar{margin-top:20px;background:#fff;border-radius:20px;padding:18px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;box-shadow:var(--sombra-leve)}
+.upload-bar input[type=file]{display:none}
+.hint{background:#FFF8E1;border:1px solid #FFE0B2;border-radius:16px;padding:16px 18px;margin-top:16px;font-size:14px;line-height:1.6;color:#6D4C41}
+.hint code{background:var(--marrom-800);color:#fff;padding:2px 8px;border-radius:6px;font-size:12px}
+
+/* CARTA */
+#carta{background:linear-gradient(135deg,#D9B99B,#C8A97E,#A67C52);text-align:center}
+.envelope-wrap{max-width:560px;margin:30px auto 0;perspective:1000px}
+.envelope{
+  background:var(--marrom-800);border-radius:22px;padding:18px;position:relative;cursor:pointer;
+  box-shadow:var(--sombra);transition:.4s;
+}
+.envelope:hover{transform:scale(1.02)}
+.envelope .flap{
+  background:var(--marrom-600);border-radius:16px;padding:26px;color:var(--creme-200);
+  font-family:'Dancing Script',cursive;font-size:30px;transition:.5s;transform-origin:top;
+}
+.envelope.open .flap{transform:rotateX(180deg);opacity:.2}
+.letter{
+  background:#FFFDF8;border-radius:18px;padding:30px 26px;margin-top:14px;text-align:left;line-height:1.8;
+  max-height:0;overflow:hidden;opacity:0;transition:.7s;padding-top:0;padding-bottom:0;
+}
+.envelope.open + .letter{max-height:900px;opacity:1;padding-top:30px;padding-bottom:30px}
+.letter h3{font-family:'Dancing Script',cursive;font-size:32px;margin-bottom:10px;color:var(--marrom-800)}
+.letter p{margin-bottom:12px;color:#4E342E}
+.assinatura{font-family:'Dancing Script',cursive;font-size:28px;text-align:right;color:var(--marrom-600)}
+
+/* CUPONS */
+#cupons{background:var(--creme)}
+.coupons{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+@media(max-width:800px){.coupons{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.coupons{grid-template-columns:1fr}}
+.coupon{background:#fff;border:2px dashed var(--caramelo-500);border-radius:20px;padding:22px;text-align:center;transition:.25s;cursor:pointer}
+.coupon:hover{transform:rotate(-1deg) scale(1.03);background:var(--creme-200)}
+.coupon.used{opacity:.55;text-decoration:line-through}
+.coupon .e{font-size:44px}
+.coupon b{display:block;margin:8px 0 4px}
+.coupon small{color:var(--marrom-400);font-weight:600}
+
+/* FINAL */
+.final{
+  background:linear-gradient(180deg,var(--marrom-900),#1B0F0A);color:var(--creme-200);text-align:center;
+  padding:100px 20px 60px;position:relative;overflow:hidden;
+}
+.final h2{font-size:clamp(34px,5vw,58px);color:#fff}
+.final .script{font-size:clamp(40px,6vw,68px);color:var(--caramelo-300);display:block}
+.big-heart{font-size:90px;animation:beat 1.2s ease-in-out infinite;display:inline-block;margin:18px 0}
+@keyframes beat{0%,100%{transform:scale(1)}25%{transform:scale(1.18)}45%{transform:scale(1.05)}}
+footer{margin-top:40px;font-size:13px;opacity:.7}
+
+/* LIGHTBOX + TOAST + CONFETTI */
+#lightbox{position:fixed;inset:0;background:rgba(27,15,10,.9);display:none;align-items:center;justify-content:center;z-index:10000;padding:20px}
+#lightbox.show{display:flex}
+#lightbox img{max-width:90vw;max-height:82vh;border-radius:20px;border:5px solid #fff;box-shadow:var(--sombra)}
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
+  background:var(--marrom-900);color:#fff;padding:14px 24px;border-radius:99px;font-weight:700;
+  z-index:10001;transition:.35s;box-shadow:var(--sombra);border:1px solid var(--caramelo-400);max-width:92vw;text-align:center;
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:10002}
+.music-btn{
+  position:fixed;bottom:22px;right:22px;z-index:200;width:56px;height:56px;border-radius:50%;
+  background:var(--marrom-800);color:#fff;border:2px solid var(--caramelo-400);font-size:24px;cursor:pointer;
+  box-shadow:var(--sombra);transition:.25s;
+}
+.music-btn:hover{transform:scale(1.1)}
+.floating-leaf{position:fixed;top:-40px;pointer-events:none;z-index:1;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-capi">🦫</div>
+  <div style="font-family:'Dancing Script',cursive;font-size:32px">Preparando nosso cantinho...</div>
+  <div class="loader-bar"><span></span></div>
+</div>
+
+<canvas id="hearts-canvas"></canvas>
+<canvas id="confetti"></canvas>
+
+<nav>
+  <div class="nav-logo">🤎 Para <span>Bia</span></div>
+  <div class="nav-links" id="navLinks">
+    <a href="#contador">Contador</a>
+    <a href="#time">Bichinhos</a>
+    <a href="#motivos">Motivos</a>
+    <a href="#jogos">Jogos</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#carta">Carta</a>
+    <a href="#final" class="nav-cta">Te amo 🤎</a>
+  </div>
+  <button class="mobile-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="blob blob1"></div><div class="blob blob2"></div><div class="blob blob3"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">🤎 Nosso cantinho marrom • capivaras & cia</div>
+      <h1><span class="script">Para Bia,</span>meu <em>amor todinho</em></h1>
+      <div class="typing" id="typing"></div>
+      <div class="hero-btns">
+        <a href="#jogos" class="btn btn-primary">🎮 Jogar juntinhos</a>
+        <a href="#carta" class="btn btn-secondary">💌 Ler minha carta</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong>🤎</strong><span>tons de marrom</span></div>
+        <div class="stat"><strong>🦫🐿️🦔</strong><span>bichinhos fofos</span></div>
+        <div class="stat"><strong>∞</strong><span>motivos p/ te amar</span></div>
+      </div>
+      <a href="#galeria" style="display:flex;gap:10px;margin-top:18px;align-items:center;text-decoration:none">
+        <img src="fotos/foto1.jpg" alt="nós" style="width:56px;height:56px;object-fit:cover;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 20px rgba(62,39,35,.3)" onerror="this.style.display='none'">
+        <img src="fotos/foto2.jpg" alt="nós" style="width:56px;height:56px;object-fit:cover;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 20px rgba(62,39,35,.3);margin-left:-22px" onerror="this.style.display='none'">
+        <img src="fotos/foto3.jpg" alt="nós" style="width:56px;height:56px;object-fit:cover;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 20px rgba(62,39,35,.3);margin-left:-22px" onerror="this.style.display='none'">
+        <span style="font-size:13px;font-weight:800;color:var(--marrom-600)">📸 ver nossas fotos na galeria ⤵</span>
+      </a>
+    </div>
+    <div class="animals-stage">
+      <div class="orbit-heart" style="animation-delay:0s">🤎</div>
+      <div class="orbit-heart" style="animation-delay:-2s;font-size:20px">✨</div>
+      <div class="orbit-heart" style="animation-delay:-4s;font-size:22px">🍂</div>
+      <div class="main-capivara">
+        <div class="big">🦫</div>
+        <b>Capivara apaixonada</b>
+        <i>te ama, Bia!</i>
+      </div>
+      <div class="float-card fc1"><div class="e">🐿️</div><div><b>Esquilo</b><small>energia fofa</small></div></div>
+      <div class="float-card fc2"><div class="e">🦔</div><div><b>Ouriço</b><small>quentinho</small></div></div>
+      <div class="float-card fc3"><div class="e">🐻</div><div><b>Ursinho</b><small>abraço quentinho</small></div></div>
+      <div class="float-card fc4"><div class="e">🦉</div><div><b>Corujinha</b><small>sábia e linda</small></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee"><div class="marquee-track" id="marquee"></div></div>
+
+<!-- CONTADOR -->
+<section id="contador">
+  <div class="wrap reveal">
+    <span class="sec-tag">⏳ Nosso tempo</span>
+    <h2 class="sec-title" style="color:#fff">Cada segundo com você conta 🤎</h2>
+    <p class="sec-sub" style="color:var(--caramelo-300)">Coloque a data que tudo começou e veja nosso amor em números.</p>
+    <div class="counter-grid">
+      <div class="counter-cards">
+        <div class="ccard"><strong id="c-dias">0</strong><span>dias</span></div>
+        <div class="ccard"><strong id="c-horas">0</strong><span>horas</span></div>
+        <div class="ccard"><strong id="c-min">0</strong><span>minutos</span></div>
+        <div class="ccard"><strong id="c-seg">0</strong><span>segundos</span></div>
+      </div>
+      <div class="date-box">
+        <label>📅 Quando começou nosso amor?</label>
+        <input type="date" id="love-date">
+        <p id="love-phrase">Escolha a data e eu te digo uma coisa fofa... 🦫</p>
+        <button class="btn btn-primary" style="margin-top:14px;width:100%;justify-content:center" onclick="saveDate()">Salvar nossa data 🤎</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIME MARROM -->
+<section id="time">
+  <div class="wrap reveal">
+    <span class="sec-tag">🦫 Time marrom</span>
+    <h2 class="sec-title">Se você fosse um bichinho marrom...</h2>
+    <p class="sec-sub">Cada bichinho tem um pedacinho da sua personalidade. Clique neles para descobrir!</p>
+    <div class="pets-grid">
+      <div class="pet pet1" onclick="petMsg('capivara')"><div class="emoji">🦫</div><span class="tag">A CALMA</span><h3>Capivara</h3><p>Tranquila, amiga de todos e paz em forma de bicho.</p></div>
+      <div class="pet pet2" onclick="petMsg('quokka')"><div class="emoji">🦘</div><span class="tag">A FELIZ</span><h3>Quokka</h3><p>O bicho mais feliz do mundo. Igual seu sorriso!</p></div>
+      <div class="pet pet3" onclick="petMsg('esquilo')"><div class="emoji">🐿️</div><span class="tag">A ENERGIA</span><h3>Esquila</h3><p>Agitada, esperta e guarda amor em cada cantinho.</p></div>
+      <div class="pet pet4" onclick="petMsg('urco')"><div class="emoji">🦔</div><span class="tag">O QUENTINHO</span><h3>Ouriço + Urso</h3><p>Pequeno por fora, coração gigante por dentro.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MOTIVOS -->
+<section id="motivos">
+  <div class="wrap reveal">
+    <span class="sec-tag">💌 Motivos infinitos</span>
+    <h2 class="sec-title">Por que eu te amo?</h2>
+    <p class="sec-sub" style="margin:0 auto">Aperte o botão e deixe a capivara do amor responder por mim.</p>
+    <div class="motivo-card">
+      <div id="motivo-text">Clique abaixo e descubra... 🤎</div>
+      <div class="motivo-count" id="motivo-count">0 / 60 motivos revelados</div>
+      <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="novoMotivo()">🦫 Novo motivo</button>
+        <button class="btn btn-secondary" onclick="copiarMotivo()">📋 Copiar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOGOS -->
+<section id="jogos">
+  <div class="wrap reveal">
+    <span class="sec-tag">🎮 Diversão a dois</span>
+    <h2 class="sec-title">Joguinhos do nosso amor</h2>
+    <p class="sec-sub">Feitos para a gente rir junto. Jogue sozinha e me conte seu recorde! 🤎</p>
+    <div class="tabs">
+      <button class="tab active" onclick="showGame(0)">🦫 Caça-Capivara</button>
+      <button class="tab" onclick="showGame(1)">🐾 Jogo da Memória</button>
+      <button class="tab" onclick="showGame(2)">💘 Quiz do Amor</button>
+    </div>
+
+    <!-- GAME 1 -->
+    <div class="game-panel active" id="game-0">
+      <div class="game-head">
+        <div><b style="font-size:20px">🦫 Pegue a Capivara!</b><br><small style="color:var(--marrom-500)">Toque nas capivaras em 30 segundos. O esquilo 🐿️ vale ponto extra, o sapo 🐸 tira ponto!</small></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <span class="score-pill">⭐ <span id="w-score">0</span></span>
+          <span class="score-pill" style="background:var(--caramelo-500)">⏱️ <span id="w-time">30</span>s</span>
+          <button class="btn btn-primary" style="padding:10px 20px" onclick="startWhack()">Começar!</button>
+        </div>
+      </div>
+      <div id="whack-grid"></div>
+      <p id="w-record" style="text-align:center;margin-top:14px;font-weight:700;color:var(--marrom-500)">Recorde: 0 pontos 🏆</p>
+    </div>
+
+    <!-- GAME 2 -->
+    <div class="game-panel" id="game-1">
+      <div class="game-head">
+        <div><b style="font-size:20px">🐾 Memória dos Bichinhos Marrons</b><br><small style="color:var(--marrom-500)">Encontre todos os pares de bichinhos!</small></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="score-pill">👣 <span id="m-moves">0</span> jogadas</span>
+          <button class="btn btn-primary" style="padding:10px 20px" onclick="startMemory()">Embaralhar</button>
+        </div>
+      </div>
+      <div id="memory-grid"></div>
+      <p id="m-msg" style="text-align:center;margin-top:14px;font-weight:700;color:var(--marrom-500)">Boa sorte, meu amor! 🍂</p>
+    </div>
+
+    <!-- GAME 3 -->
+    <div class="game-panel" id="game-2">
+      <div class="game-head">
+        <div><b style="font-size:20px">💘 Quiz: Quanto você me conhece?</b><br><small style="color:var(--marrom-500)">Edite as perguntas no código depois, se quiser!</small></div>
+        <span class="score-pill">💯 <span id="q-score">0</span>/<span id="q-total">0</span></span>
+      </div>
+      <div id="quiz-box"></div>
+      <div style="text-align:center;margin-top:16px">
+        <button class="btn btn-primary" id="quiz-next" onclick="nextQuiz()" style="display:none">Próxima ➜</button>
+        <button class="btn btn-secondary" onclick="startQuiz()">🔄 Recomeçar quiz</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria">
+  <div class="wrap reveal">
+    <span class="sec-tag">📸 Nossa galeria</span>
+    <h2 class="sec-title">Nosso álbum marrom</h2>
+    <p class="sec-sub">Nossos momentos mais lindos guardados aqui — e cada foto tem um pedacinho da gente 🤎🦫</p>
+    <div class="gallery-grid" id="gallery"></div>
+    <div class="upload-bar">
+      <label for="fileInput" class="btn btn-primary" style="padding:12px 22px">📤 Adicionar foto nossa</label>
+      <input type="file" id="fileInput" accept="image/*" multiple>
+      <span style="font-size:14px;font-weight:600;color:var(--marrom-500)">As fotos ficam salvas neste navegador 🤎 (clique numa foto para ampliar)</span>
+      <button class="btn btn-secondary" style="padding:12px 20px;margin-left:auto" onclick="limparFotos()">🗑️ Limpar enviadas</button>
+    </div>
+    <div class="hint">
+      <b>🤎 Nossas 3 primeiras fotos já estão no ar!</b><br>
+      Quer colocar mais? É só salvar a imagem como <code>foto4.jpg</code>, <code>foto5.jpg</code>... dentro da pasta <code>fotos</code> e me mandar que eu adiciono — ou use o botão acima pra adicionar na hora 📤
+    </div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section id="carta">
+  <div class="wrap reveal">
+    <span class="sec-tag" style="background:#fff;color:var(--marrom-800)">💌 Uma carta pra você</span>
+    <h2 class="sec-title" style="color:#fff">Toque no envelope...</h2>
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope" onclick="this.classList.toggle('open');burstConfetti(60)">
+        <div class="flap">Para: Bia 🤎 <br><small style="font-size:15px;font-family:'Quicksand'">clique para abrir</small></div>
+      </div>
+      <div class="letter">
+        <h3>Minha Bia,</h3>
+        <p>Se eu fosse uma capivara, passaria o dia todo boiando tranquilamente só para estar perto de você. Se eu fosse um esquilo, guardaria cada sorriso seu como quem guarda as melhores nozes para o inverno. E se eu fosse um quokka — o bichinho mais feliz do mundo —, eu ainda assim seria mais feliz com você do que sem.</p>
+        <p>Você é meu tom favorito de marrom: o quentinho do chocolate quente, o aconchego do café passado com calma, o cheiro de terra depois da chuva, o abraço de cobertor em dia frio.</p>
+        <p>Obrigado por existir, por rir das minhas bobagens e por transformar dias comuns em memórias marrons e douradas.</p>
+        <p>Esse site é só um pedacinho do que eu sinto. O resto eu prometo demonstrar todos os dias — com pipoca, passeio, preguiça de capivara no sofá e muito amor.</p>
+        <div class="assinatura">Com todo meu amor,<br>seu mozão 🤎🦫</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUPONS -->
+<section id="cupons">
+  <div class="wrap reveal">
+    <span class="sec-tag">🎟️ Vale-amor</span>
+    <h2 class="sec-title">Cupons para resgatar comigo</h2>
+    <p class="sec-sub">Clique para resgatar. Vale por abraços ilimitados e validade eterna.</p>
+    <div class="coupons" id="coupons"></div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<div class="final" id="final">
+  <span class="script">Bia, posso te dizer uma coisa?</span>
+  <h2>Você é meu lar 🤎</h2>
+  <div class="big-heart">🤎</div>
+  <p style="max-width:560px;margin:0 auto;line-height:1.8;color:var(--caramelo-200)">Onde quer que a gente esteja — no sofá, na rua, no meio das capivaras — se você estiver lá, eu estou em casa.</p>
+  <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <button class="btn" style="background:var(--caramelo-400);color:var(--marrom-900)" onclick="chuvaDeAmor()">🌧️ Chuva de amor</button>
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="btn btn-secondary">⬆ Voltar ao topo</a>
+  </div>
+  <footer>Feito com 🤎 + 🦫 + 🐿️ + ☕ para a melhor namorada do mundo — Bia • <span id="year"></span></footer>
+</div>
+
+<button class="music-btn" id="musicBtn" title="Corações flutuantes">💖</button>
+<div id="lightbox" onclick="this.classList.remove('show')"><img id="lightbox-img" src="" alt="foto ampliada"></div>
+<div id="toast"></div>
+
+<script>
+// ---------- LOADER ----------
+window.addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('hide'),1100));
+setTimeout(()=>document.getElementById('loader').classList.add('hide'),3000);
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// ---------- MARQUEE ----------
+const items='🤎 TE AMO BIA • 🦫 CAPIVARA APAIXONADA • 🐿️ ESQUILO FOFO • 🦔 OURIÇO QUENTINHO • 🐻 ABRAÇO DE URSO • 🦉 MINHA CORUJINHA • ☕ CHEIRO DE CAFÉ • 🍂 OUTONO MARROM • ';
+document.getElementById('marquee').textContent=(items+items);
+
+// ---------- TYPING ----------
+const frases=[
+  'Você é meu chocolate quente em dia frio ☕',
+  'Minha capivara favorita é você 🦫',
+  'Quokka sorri... mas não como você 🦘',
+  'Esquilo guarda nozes. Eu guardo você 🐿️',
+  'Tudo em mim é marrom de tanto amor 🤎'
+];
+let fi=0,ci=0,del=false;
+(function type(){
+  const el=document.getElementById('typing');
+  const f=frases[fi];
+  el.textContent=f.slice(0,ci);
+  if(!del){ci++;if(ci>f.length+8)del=true;}
+  else{ci--;if(ci===0){del=false;fi=(fi+1)%frases.length;}}
+  setTimeout(type,del?28:62);
+})();
+
+// ---------- REVEAL ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- CURSOR TRAIL ----------
+let lastTrail=0;
+document.addEventListener('pointermove',e=>{
+  const now=Date.now();
+  if(now-lastTrail<90)return;lastTrail=now;
+  const s=document.createElement('div');s.className='trail-heart';
+  s.textContent=['🤎','🤎','✨','🍂','🤎'][Math.floor(Math.random()*5)];
+  s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';
+  s.style.fontSize=(12+Math.random()*16)+'px';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),1000);
+});
+
+// ---------- FOLHAS CAINDO ----------
+setInterval(()=>{
+  if(document.hidden)return;
+  const l=document.createElement('div');l.className='floating-leaf';
+  l.textContent=['🍂','🤎','🍁','✨','☕'][Math.floor(Math.random()*5)];
+  l.style.left=Math.random()*100+'vw';l.style.fontSize=(14+Math.random()*20)+'px';
+  l.style.animationDuration=(4+Math.random()*5)+'s';
+  document.body.appendChild(l);setTimeout(()=>l.remove(),9000);
+},1600);
+
+// ---------- CONTADOR ----------
+let loveDate=localStorage.getItem('bia-love-date')||'';
+if(loveDate)document.getElementById('love-date').value=loveDate;
+function saveDate(){
+  loveDate=document.getElementById('love-date').value;
+  if(!loveDate){toast('Escolha uma data primeiro! 📅');return;}
+  localStorage.setItem('bia-love-date',loveDate);
+  toast('Data salva! Agora o contador é nosso 🤎');
+  updateCounter();
+}
+function updateCounter(){
+  if(!loveDate)return;
+  const start=new Date(loveDate+'T00:00:00');
+  const diff=Date.now()-start.getTime();
+  if(diff<0){document.getElementById('love-phrase').textContent='Essa data é no futuro, amor... ansiedade? 😄';return;}
+  const d=Math.floor(diff/864e5),h=Math.floor(diff/36e5)%24,m=Math.floor(diff/6e4)%60,s=Math.floor(diff/1e3)%60;
+  document.getElementById('c-dias').textContent=d.toLocaleString('pt-BR');
+  document.getElementById('c-horas').textContent=h;
+  document.getElementById('c-min').textContent=m;
+  document.getElementById('c-seg').textContent=s;
+  const f=
+    d===0?'É hoje que tudo começa? Que delícia! 🦫':
+    d<30?`${d} dias de nós... e já sou completamente seu! 🐿️`:
+    d<365?`Já são ${d} dias te amando. Cada dia melhor! 🦔`:
+    `Mais de ${Math.floor(d/365)} ano(s) de amor marrom e quentinho! Te amo! 🐻🤎`;
+  document.getElementById('love-phrase').textContent=f;
+}
+setInterval(updateCounter,1000);updateCounter();
+
+// ---------- PETS ----------
+function petMsg(k){
+  const m={
+    capivara:'🦫 A Capivara diz: "Bia, sua calma acalma até meu coração acelerado. Fica comigo boiando nesse amor?"',
+    quokka:'🦘 O Quokka diz: "Dizem que eu sou o mais feliz do mundo... é porque nunca viram seu sorriso, Bia!"',
+    esquilo:'🐿️ A Esquila diz: "Guardei 100 nozes e 1000 beijos pra você. Adivinha quais são mais doces?"',
+    urco:'🦔🐻 O Ouriço e o Urso dizem: "Somos espinhosos por fora e fofos por dentro. Igual seu mozão por você!"'
+  };
+  toast(m[k]);burstConfetti(30);
+}
+
+// ---------- MOTIVOS ----------
+const motivos=[
+'Seu sorriso cura até segunda-feira chuvosa','Seu abraço tem cheiro de lar','Você ri das minhas piadas ruins (e isso é amor)','Você fica linda até descabelada','Seu bom dia muda meu dia inteiro','Você divide a batata frita comigo (quase sempre)','Seu jeito de falar "mozão" derrete tudo','Você me apoia até nos meus planos mais doidos','Você é corajosa e nem percebe','Seu cuidado com bichinhos mostra seu coração','Você dança sem vergonha comigo','Sua risada é minha música favorita','Você me entende só pelo olhar','Você me faz querer ser melhor todo dia','Seu cheirinho é meu perfume favorito','Você acredita em mim quando nem eu acredito','Você transforma sofá + filme em programa perfeito','Sua inteligência me impressiona sempre','Você é linda por dentro e por fora','Seu "fica tranquilo" realmente me tranquiliza','Você cuida de mim quando estou mal','Sua teimosia fofa me faz rir','Você sonha grande e me leva junto','Seu carinho na minha cabeça é terapia','Você lembra das pequenas coisas que eu amo','Sua voz é meu podcast favorito','Você faz cafuné como ninguém','Você topa maratonar série comigo','Seu olhar brilha quando fala do que ama','Você é minha paz em forma de gente','Sua mão cabe perfeitinho na minha','Você me manda mensagem só pra dizer que me ama','Seu jeito dorminhoco de manhã é fofo demais','Você me perdoa rapidinho','Sua companhia faz qualquer lugar virar lar','Você cozinha (ou tenta) com amor','Você me abraça apertado quando eu preciso','Sua sinceridade me faz confiar em tudo','Você é engraçada sem tentar','Você fica brava fofa quando tem sono','Você me incentiva a comer melhor (às vezes)','Seu beijo tem gosto de quero-mais','Você planeja nosso futuro com brilho nos olhos','Você ama capivaras — como não te amar?','Você trata todo mundo com gentileza','Sua fé na gente me dá força','Você é meu porto seguro marrom','Você me faz rir até de barriga doer','Você é parceira de verdade, pra tudo','Porque você é você. E você é meu tudo 🤎','Porque até o marrom fica mais bonito com você','Porque meu coração escolheu você todos os dias','Porque "nós" é minha palavra favorita','Porque te amar é fácil, natural e infinito','Porque você está lendo isso e sorrindo agora','Porque sim. Só porque é você, Bia 🤎🦫','Porque cada dia ao seu lado é presente','Porque você é meu quokka, capivara e esquilinha','Porque o futuro é nosso e vai ser lindo','Porque eu prometi motivos infinitos — e aqui está mais um'
+];
+let motivoIdx=parseInt(localStorage.getItem('bia-motivos')||'0');
+function novoMotivo(){
+  const t=motivos[Math.floor(Math.random()*motivos.length)];
+  const el=document.getElementById('motivo-text');
+  el.style.opacity=0;
+  setTimeout(()=>{el.textContent='\u201C'+t+'\u201D';el.style.opacity=1;},220);
+  motivoIdx++;localStorage.setItem('bia-motivos',motivoIdx);
+  document.getElementById('motivo-count').textContent=motivoIdx+' / ∞ motivos revelados';
+  burstConfetti(24);
+}
+document.getElementById('motivo-count').textContent=motivoIdx+' / ∞ motivos revelados';
+function copiarMotivo(){
+  navigator.clipboard?.writeText(document.getElementById('motivo-text').textContent);
+  toast('Motivo copiado! Manda pra ela no zap 💌');
+}
+
+// ---------- TOAST ----------
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ---------- CONFETTI ----------
+const cCanvas=document.getElementById('confetti'),cCtx=cCanvas.getContext('2d');
+let parts=[];
+function sizeConfetti(){cCanvas.width=innerWidth;cCanvas.height=innerHeight;}
+sizeConfetti();addEventListener('resize',sizeConfetti);
+function burstConfetti(n=40){
+  const colors=['#5D4037','#A67C52','#D4A373','#8D6E63','#E8D5B7','#fff'];
+  const emojis=['🤎','🦫','✨','🍂'];
+  for(let i=0;i<n;i++){
+    parts.push({x:innerWidth/2+(Math.random()-.5)*300,y:innerHeight*0.4,
+      vx:(Math.random()-.5)*10,vy:Math.random()*-9-2,g:.32,
+      s:Math.random()*8+4,c:colors[i%colors.length],
+      e:Math.random()<.3?emojis[i%emojis.length]:null,
+      r:Math.random()*Math.PI,vr:(Math.random()-.5)*.3,life:90+Math.random()*40});
+  }
+}
+(function loop(){
+  cCtx.clearRect(0,0,cCanvas.width,cCanvas.height);
+  parts=parts.filter(p=>p.life>0);
+  parts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.r+=p.vr;p.life--;
+    cCtx.save();cCtx.translate(p.x,p.y);cCtx.rotate(p.r);
+    if(p.e){cCtx.font=p.s*3+'px serif';cCtx.fillText(p.e,0,0);}
+    else{cCtx.fillStyle=p.c;cCtx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);}
+    cCtx.restore();
+  });
+  requestAnimationFrame(loop);
+})();
+function chuvaDeAmor(){
+  burstConfetti(120);
+  setTimeout(()=>burstConfetti(120),400);
+  setTimeout(()=>burstConfetti(120),900);
+  toast('Está chovendo amor! ☔🤎');
+}
+
+// ---------- JOGOS: TABS ----------
+function showGame(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
+  document.querySelectorAll('.game-panel').forEach((p,j)=>p.classList.toggle('active',i===j));
+}
+
+// ---------- JOGO 1: WHACK ----------
+const WG=document.getElementById('whack-grid');
+let wScore=0,wTimer=null,wTime=30,wPlaying=false;
+let wRecord=parseInt(localStorage.getItem('bia-whack')||'0');
+document.getElementById('w-record').textContent='Recorde: '+wRecord+' pontos 🏆';
+for(let i=0;i<9;i++){const d=document.createElement('div');d.className='hole';d.textContent='🕳️';d.onclick=()=>hitHole(i);WG.appendChild(d);}
+let holes=[];
+function startWhack(){
+  wScore=0;wTime=30;wPlaying=true;
+  document.getElementById('w-score').textContent=0;
+  document.getElementById('w-time').textContent=30;
+  clearInterval(wTimer);
+  toast('Valendo! Pegue as capivaras! 🦫');
+  wTimer=setInterval(()=>{
+    wTime--;document.getElementById('w-time').textContent=wTime;
+    if(wTime<=0){endWhack();}
+  },1000);
+  spawnWhack();
+}
+function spawnWhack(){
+  if(!wPlaying)return;
+  holes=[];
+  WG.childNodes.forEach(h=>{h.textContent='🕳️';h.classList.remove('active','bonus');});
+  const n=1+Math.floor(Math.random()*2);
+  for(let k=0;k<n;k++){
+    const i=Math.floor(Math.random()*9);
+    const r=Math.random();
+    const emoji=r<.62?'🦫':r<.82?'🐿️':r<.93?'🦔':'🐸';
+    holes[i]=emoji;
+    const h=WG.childNodes[i];
+    h.textContent=emoji;h.classList.add('active');
+    if(emoji==='🐿️')h.classList.add('bonus');
+  }
+  setTimeout(()=>{if(wPlaying)spawnWhack();},650);
+}
+function hitHole(i){
+  if(!wPlaying||!holes[i])return;
+  const e=holes[i];
+  if(e==='🐸'){wScore=Math.max(0,wScore-3);toast('Eca, sapo! -3 🐸');}
+  else if(e==='🐿️'){wScore+=3;toast('Esquilo dourado! +3 🐿️✨');burstConfetti(8);}
+  else{wScore+=1;}
+  document.getElementById('w-score').textContent=wScore;
+  holes[i]=null;
+  const h=WG.childNodes[i];h.textContent='💥';h.classList.remove('bonus');
+  setTimeout(()=>{if(h.textContent==='💥'){h.textContent='🕳️';h.classList.remove('active');}},220);
+}
+function endWhack(){
+  wPlaying=false;clearInterval(wTimer);
+  WG.childNodes.forEach(h=>{h.textContent='🕳️';h.classList.remove('active','bonus');});
+  if(wScore>wRecord){wRecord=wScore;localStorage.setItem('bia-whack',wRecord);toast('🏆 NOVO RECORDE! '+wScore+' pontos! Bia é demais!');burstConfetti(100);}
+  else toast('Fim! Você fez '+wScore+' pontos! 🦫');
+  document.getElementById('w-record').textContent='Recorde: '+wRecord+' pontos 🏆';
+}
+
+// ---------- JOGO 2: MEMÓRIA ----------
+const MEMO=['🦫','🐿️','🦔','🐻','🦉','🦦','🐾','🍂'];
+const MG=document.getElementById('memory-grid');
+let mFirst=null,mLock=false,mMoves=0,mFound=0;
+function startMemory(){
+  mFirst=null;mLock=false;mMoves=0;mFound=0;
+  document.getElementById('m-moves').textContent=0;
+  document.getElementById('m-msg').textContent='Boa sorte, meu amor! 🍂';
+  const deck=[...MEMO,...MEMO].sort(()=>Math.random()-.5);
+  MG.innerHTML='';
+  deck.forEach(e=>{
+    const d=document.createElement('div');d.className='mcard';d.dataset.e=e;d.textContent='🤎';
+    d.onclick=()=>flipCard(d);MG.appendChild(d);
+  });
+}
+function flipCard(d){
+  if(mLock||d.classList.contains('open')||d.classList.contains('matched'))return;
+  d.classList.add('open');d.textContent=d.dataset.e;
+  if(!mFirst){mFirst=d;return;}
+  mMoves++;document.getElementById('m-moves').textContent=mMoves;
+  if(mFirst.dataset.e===d.dataset.e){
+    mFirst.classList.add('matched');d.classList.add('matched');
+    mFirst=null;mFound++;
+    burstConfetti(12);
+    if(mFound===MEMO.length){
+      document.getElementById('m-msg').textContent=`Você venceu em ${mMoves} jogadas! Igual nosso amor: combinação perfeita 🤎🏆`;
+      burstConfetti(120);toast('Você achou todos os pares! 🏆🤎');
+    }
+  }else{
+    mLock=true;
+    const a=mFirst;mFirst=null;
+    setTimeout(()=>{a.classList.remove('open');d.classList.remove('open');a.textContent='🤎';d.textContent='🤎';mLock=false;},750);
+  }
+}
+startMemory();
+
+// ---------- JOGO 3: QUIZ ----------
+const QUIZ=[
+  {q:'Qual bichinho marrom representa nossa calma?',o:['Capivara 🦫','Tubarão 🦈','Girafa 🦒'],a:0},
+  {q:'O que eu mais amo em você?',o:['Seu sorriso','Tudo em você 🤎','Sua risada'],a:1},
+  {q:'Nosso programa perfeito?',o:['Sofá + filme + abraço 🛋️','Escalar o Everest','Lavar louça'],a:0},
+  {q:'Qual é o tom oficial do nosso amor?',o:['Marrom quentinho 🤎','Verde neon','Cinza concreto'],a:0},
+  {q:'Quem é a namorada mais incrível do mundo?',o:['Bia! 💖','Bia!! 💖','Bia!!! 💖'],a:2},
+  {q:'Capivara ou quokka: quem é mais fofo?',o:['Você, Bia 🥰','Capivara','Quokka'],a:0}
+];
+let qi=0,qScore=0;
+document.getElementById('q-total').textContent=QUIZ.length;
+function startQuiz(){qi=0;qScore=0;document.getElementById('q-score').textContent=0;renderQuiz();}
+function renderQuiz(){
+  const box=document.getElementById('quiz-box');
+  document.getElementById('quiz-next').style.display='none';
+  if(qi>=QUIZ.length){
+    const msg=qScore===QUIZ.length?'PERFEITO! Você me conhece todinho! 💍🤎':qScore>=4?'Quase lá, meu amor! Te amo! 🦫🤎':'Que fofa tentando! Prêmio de consolação: mil beijos 💋';
+    box.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:64px">${qScore===QUIZ.length?'🏆':'🤎'}</div><div class="quiz-q">${msg}</div><p>Você acertou ${qScore} de ${QUIZ.length}</p></div>`;
+    if(qScore>=4)burstConfetti(100);
+    return;
+  }
+  const Q=QUIZ[qi];
+  box.innerHTML=`<div class="quiz-q">${qi+1}. ${Q.q}</div><div class="quiz-opts"></div>`;
+  const opts=box.querySelector('.quiz-opts');
+  Q.o.forEach((t,idx)=>{
+    const b=document.createElement('button');b.className='quiz-opt';b.textContent=t;
+    b.onclick=()=>{
+      [...opts.children].forEach((c,j)=>{c.disabled=true;if(j===Q.a)c.classList.add('correct');});
+      if(idx===Q.a){qScore++;document.getElementById('q-score').textContent=qScore;toast('Acertou! 🤎');burstConfetti(20);}
+      else{b.classList.add('wrong');toast('Ops! Mas eu te amo mesmo assim 😄');}
+      document.getElementById('quiz-next').style.display='inline-flex';
+    };
+    opts.appendChild(b);
+  });
+}
+function nextQuiz(){qi++;renderQuiz();}
+startQuiz();
+
+// ---------- GALERIA ----------
+const FIXED_PHOTOS=[
+  {src:'fotos/foto1.jpg',t:'🤎 Nosso dia de gala',s:'Elegantes e apaixonados — que beijo!'},
+  {src:'fotos/foto2.jpg',t:'💙 Beijinho azul',s:'Até na luz azul você me ilumina'},
+  {src:'fotos/foto3.jpg',t:'🥰 Juntinhos sempre',s:'Meu lugar favorito é do seu lado'}
+];
+const PLACEHOLDERS=[
+  {e:'🦫',t:'Capivara guardiã',s:'Guardando lugar pra próxima foto nossa'},
+  {e:'🐿️',t:'Esquila curiosa',s:'Ansiosa pela próxima lembrança'},
+  {e:'🦔',t:'Ouriço fofinho',s:'Enroladinho esperando mais amor'}
+];
+function getUserPhotos(){
+  try{return JSON.parse(localStorage.getItem('bia-fotos')||'[]');}catch{return [];}
+}
+function renderGallery(){
+  const g=document.getElementById('gallery');g.innerHTML='';
+  FIXED_PHOTOS.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='gitem';
+    d.innerHTML=`<img src="${p.src}" alt="${p.t}" onerror="this.parentElement.style.display='none'"><div class="cap">${p.t}<small>${p.s} • clique para ampliar</small></div>`;
+    d.querySelector('img').onclick=()=>openLightbox(p.src);
+    g.appendChild(d);
+  });
+  const user=getUserPhotos();
+  user.forEach((src,i)=>{
+    const d=document.createElement('div');d.className='gitem';
+    d.innerHTML=`<img src="${src}" alt="nossa foto ${i+1}"><div class="cap">🤎 Nossa foto extra ${i+1}<small>Clique para ampliar</small></div>`;
+    d.querySelector('img').onclick=()=>openLightbox(src);
+    g.appendChild(d);
+  });
+  PLACEHOLDERS.forEach(p=>{
+    const d=document.createElement('div');d.className='gitem g-empty';
+    d.innerHTML=`<div class="big">${p.e}</div><div><b>${p.t}</b><br><small style="color:var(--marrom-400);font-weight:600">${p.s}</small><br><small style="color:var(--caramelo-500);font-weight:800">📷 espaço para foto real</small></div>`;
+    g.appendChild(d);
+  });
+}
+function openLightbox(src){document.getElementById('lightbox-img').src=src;document.getElementById('lightbox').classList.add('show');}
+document.getElementById('fileInput').addEventListener('change',e=>{
+  const files=[...e.target.files];
+  if(!files.length)return;
+  const cur=getUserPhotos();
+  let done=0;
+  files.forEach(f=>{
+    const r=new FileReader();
+    r.onload=()=>{
+      cur.push(r.result);
+      try{localStorage.setItem('bia-fotos',JSON.stringify(cur));}catch{toast('Memória cheia! Apague alguma foto 🗑️');}
+      done++;if(done===files.length){renderGallery();toast('Fotos adicionadas! Ficaram lindas 🤎📸');burstConfetti(50);}
+    };
+    r.readAsDataURL(f);
+  });
+});
+function limparFotos(){localStorage.removeItem('bia-fotos');renderGallery();toast('Fotos enviadas apagadas 🗑️');}
+renderGallery();
+
+// ---------- CUPONS ----------
+const COUPONS=[
+  {e:'🍿',t:'Vale-filme',s:'Sofá + cobertor + você'},
+  {e:'💆',t:'Vale-massagem',s:'10 min de cafuné premium'},
+  {e:'🍫',t:'Vale-chocolate',s:'Resgatável em qualquer TPM'},
+  {e:'🌳',t:'Vale-passeio',s:'Ver capivaras juntos'},
+  {e:'🍳',t:'Vale-café da manhã',s:'Feito com amor (queimadinho)'},
+  {e:'🧸',t:'Vale-abraço',s:'Abraço de urso ilimitado'}
+];
+const usedCoupons=JSON.parse(localStorage.getItem('bia-cupons')||'[]');
+function renderCoupons(){
+  const c=document.getElementById('coupons');c.innerHTML='';
+  COUPONS.forEach((k,i)=>{
+    const d=document.createElement('div');d.className='coupon'+(usedCoupons.includes(i)?' used':'');
+    d.innerHTML=`<div class="e">${k.e}</div><b>${k.t}</b><small>${k.s}</small><br><small style="font-weight:800;color:var(--caramelo-500)">${usedCoupons.includes(i)?'✅ RESGATADO':'👉 clique para resgatar'}</small>`;
+    d.onclick=()=>{
+      if(usedCoupons.includes(i)){toast('Esse já foi usado, meu amor! 🤎');return;}
+      usedCoupons.push(i);localStorage.setItem('bia-cupons',JSON.stringify(usedCoupons));
+      renderCoupons();toast(`Cupom "${k.t}" resgatado! Pode cobrar! 😍`);burstConfetti(60);
+    };
+    c.appendChild(d);
+  });
+}
+renderCoupons();
+
+// ---------- BOTÃO CORAÇÃO ----------
+document.getElementById('musicBtn').onclick=()=>{burstConfetti(50);toast('Tome um montão de amor! 🤎🦫✨');};
+</script>
+</body>
+</html>
